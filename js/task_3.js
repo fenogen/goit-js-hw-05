@@ -1,52 +1,35 @@
 
 'use strict';
 
-const findBestEmployee = function (employees) {
-  console.table(employees);
-  
-  let empValue = 0;
-  let empName;
-  
-  for (const key in employees) {
-    const value = employees[key];
-    
-    if (empValue < value) {
-      empValue = value;
-      empName = key;
-    }
+class Storage {
+  constructor(items) {
+    this.items = items;
   }
 
-  // const arr = Object.entries(employees);               //------> Второй способ вычесления.
-  // for (let i = 0; i < arr.length; i += 1) {
-  //   if (arr[i][1] > empValue) {
-  //     empValue = arr[i][1];
-  //     empName = arr[i][0];
-  //   }
-  // }
+  getItems() {
+    return this.items;
+  }
+  addItem(item) {
+    return this.items.push(item);
+  }
 
-  console.log(
-  `Самый продуктивный сотрудник года: ${empName}. Он выполнил - ${empValue} задач`,
-  )
-  return;
-};
+  removeItem(item) {
+    const i = this.items.indexOf(item);
+    return this.items.splice(i, 1);
+  }
+}
 
-findBestEmployee({
-    ann: 29,
-    david: 35,
-    helen: 1,
-    lorence: 99,
-  }) // lorence
+const storage = new Storage(['Нанитоиды', 'Пролонгер', 'Железные жупи', 'Антигравитатор']);
+console.log(storage);
 
+const items = storage.getItems();
+console.log('Получаем массив текущих товаров:');
+console.table(items);
 
-findBestEmployee({
-    poly: 12,
-    mango: 17,
-    ajax: 4,
-  }) // mango
+storage.addItem('Дроид');
+console.log('Добавляем в массив новый товар:');
+console.table(storage.items);
 
-findBestEmployee({
-    lux: 147,
-    david: 21,
-    kiwi: 19,
-    chelsy: 38,
-  }) // lux
+storage.removeItem('Пролонгер');
+console.log('Удаляем из массива существующий товар:');
+console.table(storage.items);
