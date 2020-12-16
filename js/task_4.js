@@ -2,38 +2,38 @@
 
 'use strict';
 
+class StringBuilder {
+  constructor(value) {
+    this._value = value;
+  }
+ 
+  get value () {
+    return this._value;
+  }
 
+  append(str) {
+    return this._value = this._value + str;
+  }
 
-const countTotalSalary = function (employees) {
-    console.table(employees);
+  prepend(str) {
+    return this._value = str + this._value;
+  }
 
-    let total = 0;
+  pad(str) {
+    return this._value = str + this._value + str;
+  }
+}
 
-    for (const key in employees) {
-        const value = employees[key];
-        total += value;
-    }
-    console.log(`Общая сумма запрплат работников = ${total}`);
-    return;
-};
+const builder = new StringBuilder('.');
+console.log(builder);
 
+builder.append('^');
+console.log(builder.value); // '.^'
 
+builder.prepend('^');
+console.log(builder.value); // '^.^'
 
-
-countTotalSalary({
-}) // 0
-
-countTotalSalary({
-    mango: 100,
-    poly: 150,
-    alfred: 80,
-  }) // 330
-
-
-countTotalSalary({
-    kiwi: 200,
-    lux: 50,
-    chelsy: 150,
-  }) // 400
+builder.pad('=');
+console.log(builder.value); // '=^.^='
 
 
