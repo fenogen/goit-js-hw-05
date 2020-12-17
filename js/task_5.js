@@ -1,35 +1,82 @@
+'use strict';
 
+class Car {
+  static getSpecs(car) {
+    console.log(car);
+  };
 
-'use strict'; 
+  constructor(maxSpeed, price) {
+    this.maxSpeed = maxSpeed;
+    this.speed = 0;
+    this.isOn = false;
+    this.distance = 0;
+    this._price = price;
+  };
 
+  get price() {
+    return this._price;
+  };
+  set price(newPrice) {
+    this._price = newPrice;
+  };
 
-const products = [
-  { name: 'Радар', price: 1300, quantity: 4 },
-  { name: 'Сканер', price: 2700, quantity: 3 },
-  { name: 'Дроид', price: 400, quantity: 7 },
-  { name: 'Захват', price: 1200, quantity: 2 },
-];
+  turnOn() {
+    return this.isOn = true;
+  }
 
-console.table(products);
+  turnOff() {
+    this.isOn = false;
+    this.speed = 0;
+    return this.isOn, this.speed;
+  };
 
-const getAllPropValues = function (arr, prop) {
-    const nameArray = [];
-    
-    for (const product of arr) {
-    // Перебрали элементы и добавляем в массив для вывода.
-    nameArray.push(product[prop]) // ----> product.prop НЕ проходит в данном случае!
-    
+  accelerate(value) {
+    this.speed = this.speed + value;
+    if (this.speed <= this.maxSpeed) {
+      return this.speed;
+    } else {
+      this.speed = 0;
+      console.log('скорость > max');
     }
+  };
 
-    console.log(nameArray);
-    return;
-};
+  decelerate(value) {
+    this.speed = this.speed - value;
+    if (this.speed > 0) {
+      return this.speed;
+    } else {
+      this.speed = 0;
+      console.log('скорость < min');
+    }
+  };
 
+  drive(hours) {
+    if (this.isOn === true) {
+      return this.distance = this.distance + hours * this.speed;
+    } else {
+      return console.log('Машина не заведена!!!');
+    }
+  };
+}
 
+const mustang = new Car(200, 2000);
+console.log('Базовые характеристики машины:');
+console.log(mustang);
 
-getAllPropValues(products, 'name'); // ['Радар', 'Сканер', 'Дроид', 'Захват']
+mustang.turnOn();
+mustang.accelerate(50);
+mustang.drive(2);
+console.log('Машина едет:');
+Car.getSpecs(mustang);
+// // maxSpeed: 200, speed: 50, isOn: true, distance: 100, price: 2000
 
-getAllPropValues(products, 'quantity'); // [4, 3, 7, 2]
+mustang.decelerate(20);
+mustang.drive(1);
+mustang.turnOff();
+console.log('Машина остановилась:');
+Car.getSpecs(mustang);
+// // maxSpeed: 200, speed: 0, isOn: false, distance: 130, price: 2000
 
-getAllPropValues(products, 'category'); // []
-
+console.log(`Старая цена машины: ${mustang.price} $`); // 2000
+mustang.price = 4000;
+console.log(`Новая цена машины: ${mustang.price} $`); // 4000
